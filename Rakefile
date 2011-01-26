@@ -1,23 +1,28 @@
 require 'rubygems'
+require 'bundler'
+begin
+  Bundler.setup(:default, :development)
+rescue Bundler::BundlerError => e
+  $stderr.puts e.message
+  $stderr.puts "Run `bundle install` to install missing gems"
+  exit e.status_code
+end
 require 'rake'
 
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "dm-currency"
-    gem.summary = %Q{Integer-based currency property for DataMapper.}
-    gem.description = %Q{Integer-based currency property for DataMapper.}
-    gem.email = "asher.vanbrunt@gmail.com"
-    gem.homepage = "http://github.com/okbreathe/dm-currency"
-    gem.authors = ["Asher Van Brunt"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
-    gem.add_dependency('dm-core', '>= 1.0.0')
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
-  end
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
+  gem.name = "dm-currency"
+  gem.homepage = "http://github.com/okbreathe/dm-currency"
+  gem.license = "MIT"
+  gem.summary = %Q{Integer-based currency property for DataMapper.}
+  gem.description = %Q{Integer-based currency property for DataMapper.}
+  gem.email = "asher.vanbrunt@gmail.com"
+  gem.authors = ["Asher Van Brunt"]
+  gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+  gem.add_dependency('dm-core', '>= 1.0.0')
 end
+Jeweler::RubygemsDotOrgTasks.new
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
@@ -26,20 +31,12 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
-begin
-  require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |test|
-    test.libs << 'test'
-    test.pattern = 'test/**/test_*.rb'
-    test.verbose = true
-  end
-rescue LoadError
-  task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
-  end
+require 'rcov/rcovtask'
+Rcov::RcovTask.new do |test|
+  test.libs << 'test'
+  test.pattern = 'test/**/test_*.rb'
+  test.verbose = true
 end
-
-task :test => :check_dependencies
 
 task :default => :test
 
