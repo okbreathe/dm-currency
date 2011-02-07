@@ -47,7 +47,7 @@ module DataMapper
         elsif value.kind_of? ::Integer
           value
         else
-          raise ArgumentError, "amount must be a Float, Integer or String"
+          raise ArgumentError, "amount must be a Float, Integer or String, but was `#{value.class}`"
         end.to_i
       end
 
