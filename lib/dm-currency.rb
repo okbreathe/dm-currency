@@ -44,7 +44,7 @@ module DataMapper
           else
             value[0] + "00"
           end
-        elsif value.kind_of? ::Integer
+        elsif value.kind_of? ::Integer or value.kind_of? ::NilClass
           value
         else
           raise ArgumentError, "amount must be a Float, Integer or String, but was `#{value.class}`"
