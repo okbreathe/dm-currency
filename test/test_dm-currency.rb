@@ -16,16 +16,9 @@ class TestDmCurrency < Test::Unit::TestCase
 			assert_equal opts[:precision],  3
 		end
 
-		should "ignore invalid characters" do
-      assert_equal( 300,     Foo.create(:money => "$3foobar"    ).money ) 
-      assert_equal( 300,     Foo.create(:money => "$3.00foobar" ).money ) 
-      assert_equal( 30000,   Foo.create(:money => "$3,00foobar" ).money ) 
-      assert_equal( 2000000, Foo.create(:money => "20,000"      ).money ) 
-      assert_equal( 2000000, Foo.create(:money => "20,000.00"   ).money ) 
-		end
-
     should "convert all String values to an integer" do
-      assert_equal( 300,  Foo.create(:money => "3"     ).money ) 
+      assert_equal( -300, Foo.create(:money => "-3.00" ).money )
+      assert_equal( 300,  Foo.create(:money => "3"     ).money )
       assert_equal( 3000, Foo.create(:money => "30"    ).money )
       assert_equal( 3075, Foo.create(:money => "30.75" ).money )
       assert_equal( 3000, Foo.create(:money => "30.0"  ).money )
@@ -35,12 +28,28 @@ class TestDmCurrency < Test::Unit::TestCase
     end
 
     should "convert all Float values to an integer" do
-      assert_equal( 300,  Foo.create(:money => 3.0    ).money ) 
+      assert_equal( -300, Foo.create(:money => -3.00  ).money )
+      assert_equal( 300,  Foo.create(:money => 3.0    ).money )
       assert_equal( 3000, Foo.create(:money => 30.0   ).money )
       assert_equal( 3000, Foo.create(:money => 30.00  ).money )
       assert_equal( 3000, Foo.create(:money => 30.000 ).money )
       assert_equal( 3075, Foo.create(:money => 30.75  ).money )
       assert_equal( 30,   Foo.create(:money => 0.30   ).money )
     end
+
+    should "leave integers alone" do
+      assert_equal( -300, Foo.create(:money => -300  ).money )
+      assert_equal( 300,  Foo.create(:money => 300   ).money )
+    end
+
+		should "ignore invalid characters" do
+      assert_equal( -300,    Foo.create(:money => "-$3foo-bar"  ).money )
+      assert_equal( 300,     Foo.create(:money => "$3foobar"    ).money )
+      assert_equal( 300,     Foo.create(:money => "$3.00foobar" ).money )
+      assert_equal( 30000,   Foo.create(:money => "$3,00foobar" ).money )
+      assert_equal( 2000000, Foo.create(:money => "20,000"      ).money )
+      assert_equal( 2000000, Foo.create(:money => "20,000.00"   ).money )
+		end
+
   end
 end

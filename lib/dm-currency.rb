@@ -15,7 +15,7 @@ module DataMapper
 
       def initialize(model, name, options = {}, type = nil)
         @currency_options = [:separator, :precision].inject({}) { |m,v| m[v] = options[v] ? options.delete(v) : DEFAULT[v]; m }
-        @currency_options[:regexp] = ::Regexp.new("[^\\d#{::Regexp.escape(@currency_options[:separator])}]")
+        @currency_options[:regexp] = ::Regexp.new("(^[^\\-\\d]?)|[^\\d#{::Regexp.escape(@currency_options[:separator])}]")
         super
       end
 
