@@ -2,8 +2,9 @@
 
 Integer-based currency property for DataMapper.
 
-Represents monetary values as integers, in cents. This avoids floating point
-rounding errors. Strings and Floats are coerced into Integer values.
+Represents monetary values as integers, in the given currency's smallest
+quantity (e.g. cents for USD). This avoids floating point rounding errors.
+Strings and Floats are coerced into Integer values.
 
 == Usage
 
@@ -16,8 +17,14 @@ rounding errors. Strings and Floats are coerced into Integer values.
     end
 
     @my_model.create(:currency => "1.00")
-    @my_model.currency #=> 100
+    @my_model.currency.to_i #=> 100
+    @my_model.currency.to_f #=> 1.0
+    @my_model.currency.to_s #=> "1.00"
 
+If you want to change the default precision (2) or the separator used you can pass them
+as options to the property
+
+    property :money, Currency, :precision => 3, :separator => ','
 
 == Contributing to dm-currency
 
