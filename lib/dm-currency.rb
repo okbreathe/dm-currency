@@ -1,6 +1,49 @@
 require 'dm-core'
 
 module DataMapper
+  class Currency
+
+    attr_reader :value, :precision, :options
+
+    def initialize(value,opts)
+      @options   = opts
+      @precision = options[:precision]
+      sep        = options[:separator]
+      regexp     = options[:regexp]
+      @value = 
+        if value.kind_of? ::Float
+          (value * 100)
+        elsif value.kind_of? ::String
+          value.gsub!(regexp,'')
+          value = value.split(sep)
+          if value.length > 1
+            tail  = value.pop
+            tail += "0" while tail.length < precision  
+            value.join("") + tail[ 0, precision ]
+          else
+            value[0] + "00"
+          end
+        elsif value.kind_of? ::Integer or value.kind_of? ::NilClass
+          value
+        else
+          raise ArgumentError, "amount must be a Float, Integer or String, but was `#{value.class}`"
+        end.to_i
+    end
+
+    def to_f
+      value / 10**precision.to_f
+    end
+
+    def to_s
+      sprintf( "%.#{precision}f", to_f )
+    end
+
+    def to_i
+      value
+    end
+
+  end
+
   class Property
     class Currency < Integer
 
@@ -11,6 +54,10 @@ module DataMapper
 
       def custom?
         true
+      end
+
+      def primitive?(value)
+        value.kind_of?(::DataMapper::Currency)
       end
 
       def initialize(model, name, options = {}, type = nil)
@@ -29,30 +76,16 @@ module DataMapper
       # "30."   -> 3000
       # "0030"  -> 3000
       def load(value)
-        precision = @currency_options[:precision]
-        sep       = @currency_options[:separator]
-        regexp    = @currency_options[:regexp]
-        if value.kind_of? ::Float
-          (value * 100)
-        elsif value.kind_of? ::String
-          value.gsub!(regexp,'')
-          value = value.split(sep)
-          if value.length > 1
-            tail  = value.pop
-            tail += "0" while tail.length < precision  
-            value.join("") + tail[ 0, precision ]
-          else
-            value[0] + "00"
-          end
-        elsif value.kind_of? ::Integer or value.kind_of? ::NilClass
-          value
-        else
-          raise ArgumentError, "amount must be a Float, Integer or String, but was `#{value.class}`"
-        end.to_i
+        ::DataMapper::Currency.new(value, @currency_options)
       end
 
       def typecast_to_primitive(value)
         load(value)
+      end
+
+      def dump(value)
+        return nil if value.blank?
+        value.to_i
       end
 
     end # class Currency
