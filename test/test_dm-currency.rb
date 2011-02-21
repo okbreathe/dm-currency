@@ -6,8 +6,8 @@ class TestDmCurrency < Test::Unit::TestCase
 
 		should "set default currency arguments without arguments" do
 			opts = Foo.new(:money => "3" ).send(:properties).last.instance_variable_get(:@currency_options)
-			assert_equal opts[:separator], DataMapper::Property::Currency::DEFAULT[:separator]
-			assert_equal opts[:precision], DataMapper::Property::Currency::DEFAULT[:precision]
+			assert_equal opts[:separator], DataMapper::Currency::DEFAULT[:separator]
+			assert_equal opts[:precision], DataMapper::Currency::DEFAULT[:precision]
 		end
 
 		should "allow you to override default currency arguments " do
@@ -18,6 +18,37 @@ class TestDmCurrency < Test::Unit::TestCase
 
     should "return a DataMapper::Currency Object" do
       assert_kind_of(::DataMapper::Currency, Foo.create(:money => 1.00).money)
+    end
+
+    should "work" do
+      f = Foo.create(:money => "10.00")
+      assert_equal(false, f.new?)
+    end
+
+    should "allow basic arithmetic operations with numerics" do
+      a = Foo.create(:money => "10.00").money
+      assert_equal 100.0, (a*10).to_f
+      assert_equal 100.0, (a*10.0).to_f
+      assert_equal 5.0,   (a/2).to_f
+      assert_equal 3.33,  (a/3.0).to_f
+      assert_equal 23.0,  (a+13).to_f
+      assert_equal 22.96, (a+12.96).to_f
+      assert_equal 0.0,   (a-10).to_f
+      assert_equal 0.0,   (a-10.00).to_f
+    end
+
+    should "allow basic arithmetic operations with other currencies" do
+      a = Foo.create(:money => "10.00").money
+      b = Foo.create(:money => "10.00").money
+      c = Foo.create(:money => "20.00").money
+      assert(a == b)
+      assert(a.eql?(b))
+      assert_equal(false,a == c)
+      assert_equal(false,a.eql?(c))
+      assert_equal 20.0,  (a+b).to_f
+      assert_equal 0.0,   (a-b).to_f
+      assert_equal 1.0,   (a/b).to_f
+      assert_equal 100.0, (a*b).to_f
     end
 
     should "convert all String values to an integer" do
