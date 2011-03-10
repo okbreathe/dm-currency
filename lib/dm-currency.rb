@@ -24,6 +24,12 @@ module DataMapper
       sprintf( fmt || "%.#{precision}f", to_f )
     end
 
+    alias :as_json :to_s
+
+    def to_yaml(*args)
+      to_s.to_yaml(*args)
+    end
+
     def to_i
       value
     end
