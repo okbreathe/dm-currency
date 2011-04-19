@@ -119,7 +119,7 @@ module DataMapper
         super || dump(value).kind_of?(::Integer)
       end
 
-      def initialize(model, name, options = {}, type = nil)
+      def initialize(model, name, options = {})
         @currency_options = [:separator, :precision].inject({}) { |m,v| m[v] = options[v] ? options.delete(v) : ::DataMapper::Currency::DEFAULT[v]; m }
         @currency_options[:regexp] = ::Regexp.new("(^[^\\-\\d]?)|[^\\d#{::Regexp.escape(@currency_options[:separator])}]")
         super
@@ -134,7 +134,7 @@ module DataMapper
       end
 
       def dump(value)
-        return nil if value.blank?
+        return nil if DataMapper::Ext.blank?(value)
         value.to_i
       end
 

@@ -5,13 +5,13 @@ class TestDmCurrency < Test::Unit::TestCase
   context "A Currency Type" do
 
 		should "set default currency arguments without arguments" do
-			opts = Foo.new(:money => "3" ).send(:properties).last.instance_variable_get(:@currency_options)
+			opts = Foo.new(:money => "3" ).send(:properties).to_a.last.instance_variable_get(:@currency_options)
 			assert_equal opts[:separator], DataMapper::Currency::DEFAULT[:separator]
 			assert_equal opts[:precision], DataMapper::Currency::DEFAULT[:precision]
 		end
 
 		should "allow you to override default currency arguments " do
-			opts = Bar.new(:money => "3" ).send(:properties).last.instance_variable_get(:@currency_options)
+			opts = Bar.new(:money => "3" ).send(:properties).to_a.last.instance_variable_get(:@currency_options)
 			assert_equal opts[:separator], '^'
 			assert_equal opts[:precision],  3
 		end
