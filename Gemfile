@@ -2,6 +2,7 @@ source "http://rubygems.org"
 
 DM_VERSION    = '>= 1.1.0'
 
+gem "rake", "=0.8.7" 
 gem 'dm-sqlite-adapter',    DM_VERSION
 gem 'dm-migrations',        DM_VERSION
 

@@ -6,7 +6,7 @@ Represents monetary values as integers, in the given currency's smallest
 quantity (e.g. cents for USD). This avoids floating point rounding errors.
 Strings and Floats are coerced into Integer values.
 
-Note that dm-currency doesn't handle formatting of currencies beyond precious
+Note that dm-currency doesn't handle formatting of currencies beyond precision
 and completely ignores currency symbols.
 
 == Usage
