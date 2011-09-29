@@ -126,7 +126,7 @@ module DataMapper
       end
 
       def load(value)
-        ::DataMapper::Currency.new(value, @currency_options)
+        ::DataMapper::Currency.new(value, @currency_options) if value
       end
 
       def typecast_to_primitive(value)

@@ -25,6 +25,14 @@ class TestDmCurrency < Test::Unit::TestCase
       assert_equal(false, f.new?)
     end
 
+		should "set be nil without setting" do
+      f = Foo.create
+      assert_equal(false, f.new?)
+      assert_nil(f.money)
+      f = Foo.create(:money => nil)
+      assert_nil(f.money)
+		end
+
     should "allow basic arithmetic operations with numerics" do
       a = Foo.create(:money => "10.00").money
       assert_equal 100.0, (a*10).to_f

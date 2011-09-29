@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "dm-currency"
-  s.version = "0.1.2"
+  s.version = "0.1.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Asher Van Brunt"]
-  s.date = "2011-09-20"
+  s.date = "2011-09-29"
   s.description = "Integer-based currency property for DataMapper."
   s.email = "asher.vanbrunt@gmail.com"
   s.extra_rdoc_files = [
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "dm-currency.gemspec",
     "lib/dm-currency.rb",
     "test/data.rb",
     "test/helper.rb",
