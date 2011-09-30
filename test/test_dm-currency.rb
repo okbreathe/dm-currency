@@ -25,7 +25,7 @@ class TestDmCurrency < Test::Unit::TestCase
       assert_equal(false, f.new?)
     end
 
-		should "set be nil without setting" do
+		should "be nil before being set" do
       f = Foo.create
       assert_equal(false, f.new?)
       assert_nil(f.money)
@@ -68,6 +68,8 @@ class TestDmCurrency < Test::Unit::TestCase
       assert_equal( 3000, Foo.create(:money => "3.0.0" ).money.value )
       assert_equal( 3000, Foo.create(:money => "30."   ).money.value )
       assert_equal( 3000, Foo.create(:money => "0030"  ).money.value )
+      assert_equal(    0, Foo.create(:money => ""      ).money.value )
+      assert_equal(    0, Foo.create(:money => "foo"   ).money.value )
     end
 
     should "convert all Float values to an integer" do

@@ -93,12 +93,14 @@ module DataMapper
     def from_string(val)
       val.gsub!(options[:regexp],'')
       val = val.split(options[:separator])
-      if val.length > 1
+      if val.length >= precision
         tail  = val.pop
         tail += "0" while tail.length < precision  
         val.join("") + tail[ 0, precision ]
+      elsif val.length == 0
+        nil
       else
-        val[0] + "0"*precision
+        "#{val[0]}#{'0'*precision}"
       end
     end
 
@@ -116,7 +118,7 @@ module DataMapper
       end
 
       def valid?(value, negated = false)
-        super || dump(value).kind_of?(::Integer)
+        ret = super || dump(value).kind_of?(::Integer)
       end
 
       def initialize(model, name, options = {})
