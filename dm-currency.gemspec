@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Asher Van Brunt"]
-  s.date = "2011-09-30"
+  s.date = "2011-12-20"
   s.description = "Integer-based currency property for DataMapper."
   s.email = "asher.vanbrunt@gmail.com"
   s.extra_rdoc_files = [
@@ -46,35 +46,32 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<rake>, ["= 0.8.7"])
       s.add_runtime_dependency(%q<dm-sqlite-adapter>, [">= 1.1.0"])
       s.add_runtime_dependency(%q<dm-migrations>, [">= 1.1.0"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
-      s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.5.2"])
+      s.add_development_dependency(%q<bundler>, [">= 0"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<rr>, [">= 0"])
       s.add_development_dependency(%q<thoughtbot-shoulda>, [">= 0"])
       s.add_runtime_dependency(%q<dm-core>, [">= 1.0.0"])
     else
-      s.add_dependency(%q<rake>, ["= 0.8.7"])
       s.add_dependency(%q<dm-sqlite-adapter>, [">= 1.1.0"])
       s.add_dependency(%q<dm-migrations>, [">= 1.1.0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
-      s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
+      s.add_dependency(%q<bundler>, [">= 0"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<rr>, [">= 0"])
       s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
       s.add_dependency(%q<dm-core>, [">= 1.0.0"])
     end
   else
-    s.add_dependency(%q<rake>, ["= 0.8.7"])
     s.add_dependency(%q<dm-sqlite-adapter>, [">= 1.1.0"])
     s.add_dependency(%q<dm-migrations>, [">= 1.1.0"])
     s.add_dependency(%q<shoulda>, [">= 0"])
-    s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-    s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
+    s.add_dependency(%q<bundler>, [">= 0"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<rr>, [">= 0"])
     s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
